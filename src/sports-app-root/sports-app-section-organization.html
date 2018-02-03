@@ -1,0 +1,47 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="sports-app-section-organization">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <app-route
+    route="{{route}}"
+    pattern="/o/:org"
+    data="{{orgData}}"
+    tail="{{orgTail}}">
+    </app-route>
+
+    [[orgData.org]]
+
+    <!-- <iron-ajax
+      auto
+      url="[[_orgUrl(orgData.org)]]"
+      handle-as="json"
+      last-response="{{data}}"></iron-ajax> -->
+
+    
+  </template>
+  <script>
+    Polymer({
+      is: 'sports-app-section-organization',
+      properties: {
+        route: {
+          type: Object
+        },
+        orgs: {
+          type: Object,
+          observer: '_orgsChanged'
+        }
+      },
+      _orgsChanged: function (newV, oldV) {
+        console.log(newV, oldV);
+      },
+      attached: function () {
+        this.fire('getOrg', { org: this.orgData.org, el: this });
+      },
+    });
+  </script>
+</dom-module>

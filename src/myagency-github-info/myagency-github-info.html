@@ -1,0 +1,52 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
+<dom-module id="myagency-github-info">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      #name {
+        font-size: 3em;
+      }
+      #author, #link {
+        font-size: .9em;
+        opacity: .8;
+      }
+    </style>
+
+    <paper-card heading="[[name]]" image="[[image]]" alt="[[name]]">
+      <div class="card-content">
+        <slot></slot>
+      </div>
+      <div class="card-actions">
+        <paper-button on-click="[[_viewRepoHandler]]">View Repo</paper-button>
+      </div>
+    </paper-card>
+    
+  </template>
+  <script>
+    Polymer({
+      is: 'myagency-github-info',
+      properties: {
+        title: {
+          type: String
+        },
+        author: {
+          type: String
+        },
+        link: {
+          type: String
+        },
+        image: {
+          type: String
+        }
+      },
+      _viewRepoHandler: (e) => {
+        window.location = this.link;
+      }
+    });
+  </script>
+</dom-module>

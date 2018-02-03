@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>sports-app-root test</title>
+
+    <script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../../web-component-tester/browser.js"></script>
+
+    <link rel="import" href="../../src/sports-app-root/sports-app-root.html">
+  </head>
+  <body>
+    <test-fixture id="basic">
+      <template>
+        <sports-app-root></sports-app-root>
+      </template>
+    </test-fixture>
+
+    <script>
+      suite('sports-app-root', function() {
+        test('instantiating the element works', function() {
+          var element = fixture('basic');
+          assert.equal(element.is, 'sports-app-root');
+        });
+      });
+    </script>
+  </body>
+</html>

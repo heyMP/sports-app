@@ -1,0 +1,80 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+<link rel="import" href="../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="sports-app-section-repo.html">
+
+<dom-module id="sports-app-root">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <app-location route="{{route}}"></app-location>
+    <app-route
+        route="{{route}}"
+        pattern="/:section"
+        data="{{sectionData}}"
+        tail="{{sectionTail}}">
+    </app-route>
+
+    <iron-pages selected="[[sectionData.section]]" attr-for-selected="name">
+      <div name="r"><sports-app-section-repo route="[[sectionTail]]"></sports-app-section-repo></div>
+    </iron-pages>
+
+    <template is="dom-if" if="[[_isHomepage(sectionData.section)]]">
+        <ul>
+        <template is="dom-if" if="[[data]]">
+          <template is="dom-repeat" items="[[data]]">
+            <li><a href="/r/[[item.name]]">[[item.name]]</a></li>
+          </template>
+        </template>
+        </ul>
+    </template>
+
+    <!-- <iron-ajax
+      auto
+      url="https://api.github.com/users/heyMP/repos"
+      handle-as="json"
+      last-response="{{data}}"></iron-ajax> -->
+    
+    <iron-ajax id="githubFetch" debounce-duration="30000"></iron-ajax>
+    
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'sports-app-root',
+
+      properties: {
+        route: {
+          type: Object
+        }
+      },
+
+      ready: function () {
+        this.addEventListener('getOrg', async (e) => {
+          const el = e.detail.el;
+          this.$$('#githubFetch').toRequestOptions({
+            url: 'https://api.github.com/users/heyMP/repos',
+          });
+        });
+      },
+
+      getOrg: function () {
+        this.$$('#githubFetch').toRequestOptions({
+          url: 'https://api.github.com/users/heyMP/repos',
+        });
+      },
+
+      _isHomepage: (section) => {
+        return !section;
+      }
+
+    });
+  </script>
+</dom-module>

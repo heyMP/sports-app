@@ -1,0 +1,44 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../myagency-github-info/myagency-github-info.html">
+<link rel="import" href="sports-app-section-organization.html">
+
+<dom-module id="sports-app-section-repo">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <app-route
+      route="{{route}}"
+      pattern="/:repo"
+      data="{{repoData}}"
+      tail="{{repoTail}}">
+    </app-route>
+    <!-- <iron-ajax
+      auto
+      url="[[_repoUrl(repoData.repo)]]"
+      handle-as="json"
+      last-response="{{data}}"></iron-ajax> -->
+
+    <myagency-github-info image="https://unsplash.it/300/200" name="[[data.full_name]]" author="[[data.owner.login]]" link="[[data.owner.html_url]]"></myagency-github-info>
+
+    <sports-app-section-organization route="[[repoTail]]"></sports-app-section-organization>
+
+    <slot></slot>
+    
+  </template>
+  <script>
+    Polymer({
+      is: 'sports-app-section-repo',
+      properties: {
+        route: {
+          type: Object
+        }
+      },
+      _repoUrl: (repo) => `https://api.github.com/repos/heyMP/${repo}`,
+      ready: function() {
+      }
+    });
+  </script>
+</dom-module>

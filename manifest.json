@@ -1,0 +1,6 @@
+{
+  "name": "sports-app",
+  "short_name": "sports-app",
+  "start_url": "/",
+  "display": "standalone"
+}
